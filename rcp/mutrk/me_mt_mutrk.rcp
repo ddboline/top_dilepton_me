@@ -1,0 +1,13 @@
+### Common include file
+include                 top_dilepton_me/rcp/me_base/me_tt_base.rcp
+include                 top_dilepton_me/rcp/mutrk/mt_mutrk_selection.rcp
+
+debug_flag              false
+
+draw_histograms          false
+draw_histograms          true
+
+fit_width                20
+
+#require_parton_matched_jets  true
+#n_jets                       2

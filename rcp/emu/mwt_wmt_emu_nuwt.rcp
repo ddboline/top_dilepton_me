@@ -1,0 +1,22 @@
+include                 top_dilepton_me/rcp/mwt_base/mwt_wmt_base.rcp
+
+btag_type               0
+
+use_absolute_background_weight  true
+
+template_mass_low       100.0
+template_mass_high      250.0
+template_mass_step      10.0
+fit_width               20.0
+
+ftop_input              0.80 0.80 0.80 0.80 0.80
+ftop_true               0.80 0.80 0.80 0.80 0.80
+
+tag_ens_size            32 32 32 32 32
+
+use_isr_fsr             false
+
+#mt fit error            8.78745 8.47682 8.82663 8.67859 8.56315 8.78504 8.47587 8.78624
+calibration_const       -0.00482827 0.150082 0.234704 -0.0110881 0.0727636 -0.00527752 0.149975 -0.00505722
+calibration_slope       0.962243 0.994105 0.959598 0.968983 0.976272 0.962299 0.994121 0.962271
+calibration_error       1.02729 0.996021 1.03921 1.01252 1.00661 1.02723 0.996005 1.02726

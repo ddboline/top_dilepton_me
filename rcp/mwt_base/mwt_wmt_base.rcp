@@ -1,0 +1,38 @@
+debug_params            true
+debug_flag              false
+MASS_LOW                100
+MASS_HIGH               300
+MASS_STEP               1.
+use_lars_tt_sol         true
+use_me_weight           false
+use_madgraph_tt         false
+use_real_met            true
+use_zero_pt             false
+number_smears           100
+
+do_electron_integration true
+do_muon_integration     true
+do_b0_integration       true
+do_b1_integration       true
+do_met_integration      true
+
+do_jes_systematic       true
+use_ljet_me_jes         false
+bjes_err                0.015
+
+draw_histograms         false
+use_isr_fsr             false  ### reduce pythia/alpgen diff.
+# const_background        1e-3
+
+use_mean_rms            true
+
+const_background        1e-6
+
+is_run2b                true ### BE CAREFUL!
+
+use_preshutdown_mu      true
+
+#xsec_tt                  8.085
+
+### fix relative contribution of each background
+#use_absolute_background_weight    true

@@ -1,0 +1,18 @@
+btag_type               1
+
+### Cross section style selection
+use_tight_electrons     2
+use_mediumnseg3_muons   1
+HT_leadlep              115 115 115 115 115
+
+#ftop_input               1.0 1.0 1.0 1.0 1.0
+#ftop_true                1.0 1.0 1.0 1.0 1.0
+ftop_input              0.33 0.65 0.97 1.0 0.77
+ftop_true               0.33 0.65 0.97 1.0 0.77
+
+tag_ens_size            14 9 31 40 46
+#tag_ens_size             100 100 100 100 100
+
+psig_norm               -26.3429 -0.0774677 7.25768e-05 42
+pbkg_norm               1.90463e-15 42
+const_psig              6e-3

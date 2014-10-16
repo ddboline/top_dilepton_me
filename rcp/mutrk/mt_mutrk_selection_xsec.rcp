@@ -1,0 +1,12 @@
+### Cross section style selection
+btag_type               0
+use_mediumnseg3_muons   -1
+
+
+ftop_input               0.79 0.79 0.79 0.79 0.79
+ftop_true                0.79 0.79 0.79 0.79 0.79
+
+tag_ens_size             8 8 8 8 8
+
+metZ_cut                25 35
+metZ_fit_cut            40 40

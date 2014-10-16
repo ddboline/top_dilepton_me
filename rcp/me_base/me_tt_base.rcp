@@ -1,0 +1,37 @@
+debug_params        true
+
+debug_flag          false
+MASS_LOW            140.
+MASS_HIGH           210.
+MASS_STEP           1.
+use_lars_tt_sol     true
+use_madgraph_tt     false
+use_alternative_me  false
+use_gg_me           false
+
+do_electron_integration true
+do_muon_integration true
+use_mix_mu          true
+
+#use_real_met        true
+#use_zero_pt         false
+#do_met_integration  true
+
+use_real_met        false
+use_zero_pt         true
+do_met_integration  false
+
+do_mw_integration   false
+do_mt_integration   false
+do_b0_integration   true
+do_b1_integration   true
+
+do_parton_level_me           false
+do_parton_level_smearing     false
+
+integ_error           0.05
+
+#n_jets                       2
+#require_parton_matched_jets  true
+
+draw_histograms              false

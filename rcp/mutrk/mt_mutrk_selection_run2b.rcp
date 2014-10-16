@@ -1,0 +1,41 @@
+btag_type               2
+
+lepton_pt_cut           0 20
+lead_jet_cut            30 30 30 30 30
+m_ll_cut                15
+
+use_mediumnseg3_muons   4
+eps_real_lep            0.9651 0.8086
+deps_real_lep           0.004 0.004
+eps_fake_lep            0.03711 0.218
+deps_fake_lep           0.003 0.003
+
+loose_lep_cut           -1 -1
+tight_lep_cut           4 4
+
+#met_notZ                30 30 30 30 30
+#met_Z                   30 30 30 30 30
+#met_sig_cut             10 2 2 2 10
+
+### L6 Tagger
+btag_type               1
+
+met_sig_cut             2      2.1   0   0     14
+pbkg_cut                0      0     0   17    0
+pbkg_ztt_cut            42.25  19.5  0   18.5  29.25
+tag_ens_size            3      1     0   1     1
+
+ftop_input 0.225226 0.699349 0.46643 0.544386 0.632038
+ftop_true 0.225226 0.699349 0.46643 0.544386 0.632038
+
+#z_window_low            80 80 80 80 80
+#z_window_high           100 100 100 100 100
+#met_Z                   300 300 300 300 300
+
+#met_sig_cut             1      2.1   0   0      1.9
+#pbkg_cut                37.75  0     0   17     37
+#pbkg_ztt_cut            0      18    0   18.25  0
+#tag_ens_size            2      1     0   1      2
+
+#ftop_input 0.182804 0.7029 0.586393 0.661254 0.984933
+#ftop_true 0.182804 0.7029 0.586393 0.661254 0.984933

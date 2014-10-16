@@ -1,0 +1,11 @@
+### Cross section style selection
+btag_type               0
+use_tight_electrons     -1
+
+ftop_input               0.9 0.9 0.9 0.9 0.9
+ftop_true                0.9 0.9 0.9 0.9 0.9
+
+tag_ens_size             8 8 8 8 8
+
+metZ_cut                25 35
+metZ_fit_cut            25 35

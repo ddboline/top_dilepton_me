@@ -1,0 +1,36 @@
+btag_type               2
+use_tight_electrons     2
+use_mediumnseg3_muons   4
+
+lead_jet_cut            30 30 30 30 30
+
+met_notZ                30 30 30 30 30
+met_Z                   30 30 30 30 30
+
+eps_real_lep            0.859 0.767
+deps_real_lep           0.004 0.004
+eps_fake_lep            0.1095 0.218
+deps_fake_lep           0.008 0.012
+
+loose_lep_cut           -1 -1
+tight_lep_cut           2 4
+
+met_sig_cut             10      10    10    10    10
+
+### MEDIUM Tagger
+#pbkg_cut                29   0     0   0   29
+#pbkg_ztt_cut            0    16    16  16  19.25
+#tag_ens_size            2    2     0   2   4
+
+#ftop_input 0.727051 1.25826 0.992719 1.16797 1.15722
+#ftop_true 0.727051 1.25826 0.992719 1.16797 1.15722
+
+### L6 Tagger
+btag_type               1
+
+pbkg_cut                29      28.5  0     0    29
+pbkg_ztt_cut            19.25   16    16    16   19.25
+tag_ens_size            1       2     1     3    4
+
+ftop_input 0.95 0.95 0.95 0.964865 0.95
+ftop_true 0.95 0.95 0.95 0.964865 0.95

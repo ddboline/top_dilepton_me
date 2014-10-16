@@ -1,0 +1,8 @@
+include                 top_dilepton_me/rcp/mwt_base/mwt_wmt_base.rcp
+include                 top_dilepton_me/rcp/mutrk/mt_mutrk_selection_xsec.rcp
+
+template_mass_low       100.0
+template_mass_high      250.0
+template_mass_step      10.0
+fit_width               20.0
+

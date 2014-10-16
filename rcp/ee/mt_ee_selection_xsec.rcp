@@ -1,0 +1,19 @@
+btag_type               1
+
+### Cross section style selection
+use_tight_electrons     2
+met_notZ                35.0 35.0 35.0 35.0 35.0
+met_Z                   300 300 300 300 300
+z_window_low            80 80 80 80 80
+z_window_high           100 100 100 100 100
+met_belowZ              40 40 40 40 40
+met_aboveZ              35 35 35 35 35
+ftop_input              0.76 0.76 0.76 0.76 0.76
+ftop_true               0.76 0.76 0.76 0.76 0.76
+
+tag_ens_size             8 6 3 11 21
+#tag_ens_size             100 100 100 100 100
+
+psig_norm               -35.0286 -0.0587924 1.7175e-05 53
+pbkg_norm               3.74756e-28 6
+const_psig              6e-3

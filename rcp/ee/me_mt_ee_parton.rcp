@@ -1,0 +1,16 @@
+include                 top_dilepton_me/rcp/me_tt_base_parton.rcp
+
+btag_type               0
+debug_flag              false
+
+ftop_input               1.0 1.0 1.0 1.0 1.0
+ftop_true                1.0 1.0 1.0 1.0 1.0
+
+psig_norm                -34.66 -5.654e-2
+const_background         1e-5
+
+draw_histograms          false
+
+fit_width                3
+
+tag_ens_size             50 50 50 50 50

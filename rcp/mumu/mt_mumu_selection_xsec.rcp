@@ -1,0 +1,32 @@
+### Cross section style selection
+btag_type               3
+use_mediumnseg3_muons   2
+
+met_notZ                35.0 35.0 35.0 35.0 35.0
+met_Z                   35.0 35.0 35.0 35.0 35.0
+z_window_low            80 80 80 80 80
+z_window_high           100 100 100 100 100
+#dphi_cut_l1             0.3 0.3 0.3 0.3 -1
+
+zfitter_chi2_cut        8 8 8 8 8
+triangle1_X1            35 35 35 35 35
+triangle1_Y1            0.87266463 0.87266463 0.87266463 0.87266463 0.87266463
+triangle1_X2            85 85 85 85 85
+triangle1_Y2            0 0 0 0 0
+triangle2_X1            35 35 35 35 35
+triangle2_Y1            2.181661564992 2.181661564992 2.181661564992 2.181661564992 2.181661564992
+triangle2_X2            85 85 85 85 85
+triangle2_Y2            3.0543 3.0543 3.0543 3.0543 3.0543
+dphi_cut_l1_max         3.0543 3.0543 3.0543 3.0543 3.0543
+
+#ftop_input               1.0 1.0 1.0 1.0 1.0
+#ftop_true                1.0 1.0 1.0 1.0 1.0
+ftop_input              0.2 0.42 0.83 0.72 0.62
+ftop_true               0.2 0.42 0.83 0.72 0.62
+
+tag_ens_size            11 3 6 9 20
+#tag_ens_size             100 100 100 100 100
+
+psig_norm               -18.0427 -0.0892156 0.000108631 14
+pbkg_norm               2.0537e-31 2
+const_psig              6e-3

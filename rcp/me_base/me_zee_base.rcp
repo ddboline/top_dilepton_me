@@ -1,0 +1,15 @@
+debug_params        true
+
+debug_flag          false
+use_madgraph_tt     false
+do_electron_integration true
+do_muon_integration true
+use_mix_mu          true
+
+use_real_met        true
+use_zero_pt         false
+
+do_parton_level_me      false
+do_met_integration      false
+
+draw_histograms         false

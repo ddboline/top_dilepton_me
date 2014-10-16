@@ -1,0 +1,42 @@
+### Common include file
+include                 top_dilepton_me/rcp/me_base/me_tt_base.rcp
+#include                 top_dilepton_me/rcp/emu/mt_emu_selection.rcp
+
+debug_flag              false
+
+draw_histograms          false
+draw_histograms          true
+
+fit_width                20
+
+#require_parton_matched_jets  true
+#n_jets                       2
+
+ftop_input      1.0 1.0 1.0 1.0 1.0
+ftop_true       1.0 1.0 1.0 1.0 1.0
+
+tag_ens_size            100 100 100 100 100
+
+
+#psig_norm                -25.5849 -0.0882913 0.000101914 42.6239
+#const_psig         2.3e-2
+
+#psig_norm                -3.55279 -0.00636838 -6.24083e-05 0.0522315
+#const_psig          5e-2
+
+draw_histograms              false
+
+template_mass_low       100.0
+template_mass_high      240.0
+template_mass_step      10.0
+fit_width               20.0
+
+#mt fit error            3.49232 3.45054 3.52062 3.58757 3.51769 3.49232 3.45054 3.49232
+#calibration_const       4.69462 4.66315 4.78885 4.86056 4.75497 4.69462 4.66315 4.69462
+#calibration_slope       0.880439 0.886168 0.866219 0.877594 0.867132 0.880439 0.886168 0.880439
+#calibration_error       1.35284 1.35411 1.33321 1.35353 1.34014 1.35284 1.35411 1.35284
+
+#mt fit error            3.87801 3.89626 4.13236 4.00894 3.88388 3.87801 3.89626 3.87801
+#calibration_const       18.8238 18.7758 18.5499 18.6647 18.7394 18.8238 18.7758 18.8238
+#calibration_slope       1.10881 1.08583 1.07369 1.08774 1.10167 1.10881 1.08583 1.10881
+#calibration_error       1.0512 1.04682 1.07616 1.08083 1.03834 1.0512 1.04682 1.0512
