@@ -1,6 +1,7 @@
 #ifndef DALITZSIGMA_FUNCTION_H
 #define DALITZSIGMA_FUNCTION_H
 #include "TVector2.h"
+#include "TMath.h"
 
 /**
 	@author Dan Boline <ddboline@buphy.bu.edu>

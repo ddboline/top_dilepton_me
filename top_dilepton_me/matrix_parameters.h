@@ -76,7 +76,7 @@ namespace ll_matrix
       double eta_limits_mu[2];
       double jet_res[4][3];
       double eta_limits_jet[4];
-      double transfer_function_parms[4][2][5];
+      double transfer_function_parms[4][2][7];
       double bjet_tf_parms[4][5][2];
       double bmujet_tf_parms[4][5][2];
       double ljet_tf_parms[4][5][2];

@@ -9,10 +9,14 @@
 
 // #include "top_dilepton_me/LHAPDFWrap.h"
 
+// #define __USE_LHAPDF__
+
+#ifdef __USE_LHAPDF__
 extern "C"
 {
     extern double alphaspdf_(double * scale);
 }
+#endif
 
 namespace ll_matrix 
 {
@@ -35,7 +39,13 @@ namespace ll_matrix
             std::pair<double,double> get_fx_fxbar( TLorentzVector t1 , TLorentzVector t2 , double mt );
 
             bool output_pdf( double x1 , double x2 , double scale );
-            double alpha_s( double scale ){ return alphaspdf_( &scale ); }
+            double alpha_s( double scale ){
+#ifdef __USE_LHAPDF__
+                return alphaspdf_( &scale );
+#else
+                return 1.0;
+#endif          
+            }
 
             double compute_pdf_factor( int iset , double x , double q , int flav );
 

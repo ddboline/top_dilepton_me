@@ -11,7 +11,9 @@
 //
 #include "top_dilepton_me/matrix_ensemble.h"
 #include "TFile.h"
+#include "TF1.h"
 #include "TH1F.h"
+#include "TH2F.h"
 #include "TGraphErrors.h"
 #include "TKey.h"
 #include <iostream>

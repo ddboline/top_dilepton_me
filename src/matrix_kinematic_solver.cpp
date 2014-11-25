@@ -44,7 +44,8 @@ namespace ll_matrix
 
     matrix_kinematic_solver::~matrix_kinematic_solver()
     {
-        delete [] d_sig_funcs;
+        for( int i = 0 ; i < 2 ; i++ )
+            delete d_sig_funcs[i];
         delete F_x , dF_x , dF_x2 , top1 , top2;
     }
 

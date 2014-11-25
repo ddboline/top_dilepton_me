@@ -2,6 +2,8 @@
 #include "top_dilepton_me/matrix_resolutions.h"
 #include "TFile.h"
 #include "TH1F.h"
+#include "TH2F.h"
+#include "TMath.h"
 #include "TGraphErrors.h"
 #include "TKey.h"
 #include <iostream>

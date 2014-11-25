@@ -15,6 +15,7 @@
 
 using namespace std;
 
+#ifdef __USE_LHAPDF__
 extern "C"
 {
     extern void initpdfset_(const char * name , int _len_name );
@@ -27,6 +28,7 @@ extern "C"
     extern void evolvepdf_(double * x , double * scale , double f[13]);
     extern void evolvepdfm_(int * set , double * x , double * scale , double f[13] );
 };
+#endif
 
 namespace ll_matrix
 {
@@ -86,13 +88,14 @@ void ll_matrix::matrix_pdfs::set_pdf( int set , int pdf_member , std::string pdf
 
 //         initpdfset_( pdf_set.c_str() , pdf_set.length() );
 //         int set = 1;
+#ifdef __USE_LHAPDF__
         initpdfsetm_( &set , pdf_set.c_str() , pdf_set.length() );
-
 //         initpdfsetbyname_( pdf_set.c_str() , pdf_set.length() );
 //         initpdfsetbyname_( pdf_set.c_str() );
 //         lhpdfwrapper_( pdf_set.c_str() );
 //         initpdf_(&member);
         initpdfm_(&set , &member);
+#endif
         d_params->pdf_has_been_declared = true;
     }
 
@@ -212,10 +215,14 @@ bool ll_matrix::matrix_pdfs::output_pdf( double x1, double x2, double scale )
 //         scale = mt;
         dx = x1;
         int set = 1;
+#ifdef __USE_LHAPDF__
         evolvepdfm_( &set , &dx , &scale , f1 );
+#endif
 //         f1 = d_lhapdf->xfx( dx , scale );
         dx = x2;
+#ifdef __USE_LHAPDF__
         evolvepdfm_( &set , &dx , &scale , f2 );
+#endif
 //         f1 = d_lhapdf->xfx( dx , scale );
 
         double u1 = f1[8] , u2 = f2[8] , ubar1 = f1[4] , ubar2 = f2[4];
@@ -303,8 +310,9 @@ double ll_matrix::matrix_pdfs::compute_pdf_factor(int iset, double x, double q, 
     double f[13];
     for (int i=0;i<13;i++) 
         f[i]=0.;
-
+#ifdef __USE_LHAPDF__
     evolvepdfm_(&iset,&x,&q,f);
+#endif
     double pdf = f[flav+6];
 
     return pdf;

@@ -13,6 +13,8 @@
 #include "TMath.h"
 #include <iostream>
 
+// #define __USE_MADGRAPH__
+
 using namespace std;
 
 namespace ll_matrix 
@@ -124,7 +126,7 @@ double ll_matrix::matrix_element::eval( base_event & d_event, int lep_idx1, int 
     if( ( t1 + t2 ).Pt() > MIN_VAL )
         cout << " de-boosting failed " << (t1 + t2).Pt() << endl;
 
-    double alpha_s = d_pdfs->alpha_s( M_t );
+    double alpha_s = d_pdfs->alpha_s( M_t ); // nothing
     double g_s2 = alpha_s * 4. * TMath::Pi();
     double sinqt = t1.Pt() / t1.P();
     double beta = t1.Beta();
@@ -141,12 +143,16 @@ double ll_matrix::matrix_element::eval_madgraph( base_event & d_event, int lep_i
     if( !couplings_initialized )
     {
         std::string par( "parms.txt" );
+#ifdef __USE_MADGRAPH__
         init_(par.c_str(), par.size());
+#endif
         couplings_initialized = true;
     }
     if( M_t != current_mt )
     {
+#ifdef __USE_MADGRAPH__
         set_tmass_( &M_t );
+#endif
     }
     current_mt = M_t;
     double result = 0.;
@@ -185,6 +191,7 @@ double ll_matrix::matrix_element::eval_madgraph( base_event & d_event, int lep_i
 
         /// Again, this is ugly, but functional
     double ans_new[10] = {0};
+#ifdef __USE_MADGRAPH__
     smatrix_uux_epvemumvmxbbx_( q_new , ans_new );
 //     if( d_params->debug_flag ) 
 //         cout << " answer smatrix_uux_epvemumvmxbbx_ " << ans_new[0] << " " << d_pdfs->fx1[2] << " " << d_pdfs->fx2[-2] << endl;
@@ -221,6 +228,7 @@ double ll_matrix::matrix_element::eval_madgraph( base_event & d_event, int lep_i
 //         cout << " m2 results " << result << endl;
     }
 //     cout << "me result " << result << endl;
+#endif
     return result;
 }
 
@@ -355,7 +363,9 @@ double ll_matrix::matrix_element::eval_wwjj( base_event & d_event, int lep_idx1,
     if( !couplings_initialized )
     {
         std::string par( "parms.txt" );
+#ifdef __USE_MADGRAPH__
         init_(par.c_str(), par.size());
+#endif
         couplings_initialized = true;
     }
     double result = 0.;
@@ -384,436 +394,14 @@ double ll_matrix::matrix_element::eval_wwjj( base_event & d_event, int lep_idx1,
 
     /// Again, this is ugly, but functional
     double ans_new[10] = {0};
+#ifdef __USE_MADGRAPH__
     smatrix_udx_epmumvevmxsxc_( q_new , ans_new );
     // if( d_params->debug_flag ) cout << " answer smatrix_udx_epmumvevmxsxc_ " << ans_new[0] << endl;
     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-1];
     smatrix_udx_epmumvevmxudx_( q_new , ans_new );
     // if( d_params->debug_flag ) cout << " answer smatrix_udx_epmumvevmxudx_ " << ans_new[0] << endl;
     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-1];
-
-    
-// //     smatrix_cd_epmumvevmxdc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cd_epmumvevmxdc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[1];
-// //     smatrix_cd_epmumvevmxus_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cd_epmumvevmxus_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[1];
-// //     smatrix_cdx_epmumvevmxdxc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cdx_epmumvevmxdxc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-1];
-// //     smatrix_cs_epmumvevmxsc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cs_epmumvevmxsc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[3];
-// //     smatrix_csx_epmumvevmxsxc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_csx_epmumvevmxsxc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-3];
-// //     smatrix_csx_epmumvevmxudx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_csx_epmumvevmxudx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-3];
-// //     smatrix_cu_epmumvevmxuc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cu_epmumvevmxuc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[2];
-// //     smatrix_cux_epmumvevmxdxs_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cux_epmumvevmxdxs_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-2];
-// //     smatrix_cux_epmumvevmxuxc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cux_epmumvevmxuxc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-2];
-// //     smatrix_cxd_epmumvevmxdcx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cxd_epmumvevmxdcx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[1];
-// //     smatrix_cxdx_epmumvevmxdxcx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cxdx_epmumvevmxdxcx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[-1];
-// //     smatrix_cxdx_epmumvevmxuxsx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cxdx_epmumvevmxuxsx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[-1];
-// //     smatrix_cxs_epmumvevmxscx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cxs_epmumvevmxscx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[3];
-// //     smatrix_cxs_epmumvevmxuxd_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cxs_epmumvevmxuxd_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[3];
-// //     smatrix_cxsx_epmumvevmxsxcx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cxsx_epmumvevmxsxcx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[-3];
-// //     smatrix_cxu_epmumvevmxdsx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cxu_epmumvevmxdsx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[2];
-// //     smatrix_cxu_epmumvevmxucx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cxu_epmumvevmxucx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[2];
-// //     smatrix_cxux_epmumvevmxuxcx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_cxux_epmumvevmxuxcx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[-2];
-// //     smatrix_dc_epmumvevmxdc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dc_epmumvevmxdc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[4];
-// //     smatrix_dc_epmumvevmxus_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dc_epmumvevmxus_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[4];
-// //     smatrix_dcx_epmumvevmxdcx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dcx_epmumvevmxdcx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-4];
-// //     smatrix_dd_epmumvevmxdd_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dd_epmumvevmxdd_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[1];
-// // //     smatrix_dd_epmumvevmxdd_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dd_epmumvevmxdd_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[3];
-// //     smatrix_ddx_epmumvevmxccx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epmumvevmxccx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-1];
-// // //     smatrix_ddx_epmumvevmxccx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epmumvevmxccx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-3];
-// //     smatrix_ddx_epmumvevmxddx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epmumvevmxddx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-1];
-// // //     smatrix_ddx_epmumvevmxddx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epmumvevmxddx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-3];
-// //     smatrix_ddx_epmumvevmxgg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epmumvevmxgg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-1];
-// // //     smatrix_ddx_epmumvevmxgg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epmumvevmxgg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-3];
-// //     smatrix_ddx_epmumvevmxssx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epmumvevmxssx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-1];
-// // //     smatrix_ddx_epmumvevmxssx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epmumvevmxssx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-3];
-// //     smatrix_ddx_epmumvevmxuux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epmumvevmxuux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-1];
-// // //     smatrix_ddx_epmumvevmxuux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epmumvevmxuux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-3];
-// //     smatrix_dg_epmumvevmxdg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dg_epmumvevmxdg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[21];
-// // //     smatrix_dg_epmumvevmxdg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dg_epmumvevmxdg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[21];
-// //     smatrix_ds_epmumvevmxds_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ds_epmumvevmxds_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[3];
-// //     smatrix_dsx_epmumvevmxdsx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dsx_epmumvevmxdsx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-3];
-// //     smatrix_dsx_epmumvevmxucx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dsx_epmumvevmxucx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-3];
-// //     smatrix_du_epmumvevmxud_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_du_epmumvevmxud_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[2];
-// //     smatrix_dux_epmumvevmxscx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dux_epmumvevmxscx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-2];
-// //     smatrix_dux_epmumvevmxuxd_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dux_epmumvevmxuxd_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-2];
-// //     smatrix_dxc_epmumvevmxdxc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxc_epmumvevmxdxc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[4];
-// //     smatrix_dxcx_epmumvevmxdxcx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxcx_epmumvevmxdxcx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[-4];
-// //     smatrix_dxcx_epmumvevmxuxsx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxcx_epmumvevmxuxsx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[-4];
-// //     smatrix_dxd_epmumvevmxccx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxd_epmumvevmxccx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[1];
-// // //     smatrix_dxd_epmumvevmxccx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxd_epmumvevmxccx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[3];
-// //     smatrix_dxd_epmumvevmxddx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxd_epmumvevmxddx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[1];
-// // //     smatrix_dxd_epmumvevmxddx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxd_epmumvevmxddx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[3];
-// //     smatrix_dxd_epmumvevmxgg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxd_epmumvevmxgg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[1];
-// // //     smatrix_dxd_epmumvevmxgg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxd_epmumvevmxgg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[3];
-// //     smatrix_dxd_epmumvevmxssx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxd_epmumvevmxssx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[1];
-// // //     smatrix_dxd_epmumvevmxssx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxd_epmumvevmxssx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[3];
-// //     smatrix_dxd_epmumvevmxuux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxd_epmumvevmxuux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[1];
-// // //     smatrix_dxd_epmumvevmxuux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxd_epmumvevmxuux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[3];
-// //     smatrix_dxdx_epmumvevmxdxdx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxdx_epmumvevmxdxdx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[-1];
-// // //     smatrix_dxdx_epmumvevmxdxdx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxdx_epmumvevmxdxdx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[-3];
-// //     smatrix_dxg_epmumvevmxdxg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxg_epmumvevmxdxg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[21];
-// // //     smatrix_dxg_epmumvevmxdxg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxg_epmumvevmxdxg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[21];
-// //     smatrix_dxs_epmumvevmxdxs_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxs_epmumvevmxdxs_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[3];
-// //     smatrix_dxs_epmumvevmxuxc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxs_epmumvevmxuxc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[3];
-// //     smatrix_dxsx_epmumvevmxdxsx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxsx_epmumvevmxdxsx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[-3];
-// //     smatrix_dxu_epmumvevmxsxc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxu_epmumvevmxsxc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[2];
-// //     smatrix_dxu_epmumvevmxudx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxu_epmumvevmxudx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[2];
-// //     smatrix_dxux_epmumvevmxuxdx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_dxux_epmumvevmxuxdx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-1] * d_pdfs->fx2[-2];
-// //     smatrix_gd_epmumvevmxdg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gd_epmumvevmxdg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[1];
-// // //     smatrix_gd_epmumvevmxdg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gd_epmumvevmxdg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[3];
-// //     smatrix_gdx_epmumvevmxdxg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gdx_epmumvevmxdxg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[-1];
-// // //     smatrix_gdx_epmumvevmxdxg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gdx_epmumvevmxdxg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[-3];
-// //     smatrix_gg_epmumvevmxddx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gg_epmumvevmxddx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[21];
-// // //     smatrix_gg_epmumvevmxddx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gg_epmumvevmxddx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[21];
-// //     smatrix_gg_epmumvevmxuux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gg_epmumvevmxuux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[21];
-// // //     smatrix_gg_epmumvevmxuux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gg_epmumvevmxuux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[21];
-// //     smatrix_gu_epmumvevmxug_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gu_epmumvevmxug_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[2];
-// // //     smatrix_gu_epmumvevmxug_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gu_epmumvevmxug_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[4];
-// //     smatrix_gux_epmumvevmxuxg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gux_epmumvevmxuxg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[-2];
-// // //     smatrix_gux_epmumvevmxuxg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_gux_epmumvevmxuxg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[21] * d_pdfs->fx2[-4];
-// //     smatrix_sc_epmumvevmxsc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sc_epmumvevmxsc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[4];
-// //     smatrix_scx_epmumvevmxscx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_scx_epmumvevmxscx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-4];
-// //     smatrix_scx_epmumvevmxuxd_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_scx_epmumvevmxuxd_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-4];
-// //     smatrix_sd_epmumvevmxds_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sd_epmumvevmxds_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[1];
-// //     smatrix_sdx_epmumvevmxdxs_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sdx_epmumvevmxdxs_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-1];
-// //     smatrix_sdx_epmumvevmxuxc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sdx_epmumvevmxuxc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-1];
-// //     smatrix_su_epmumvevmxdc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_su_epmumvevmxdc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[2];
-// //     smatrix_su_epmumvevmxus_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_su_epmumvevmxus_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[2];
-// //     smatrix_sux_epmumvevmxuxs_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sux_epmumvevmxuxs_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-2];
-// //     smatrix_sxc_epmumvevmxsxc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sxc_epmumvevmxsxc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[4];
-// //     smatrix_sxc_epmumvevmxudx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sxc_epmumvevmxudx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[4];
-// //     smatrix_sxcx_epmumvevmxsxcx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sxcx_epmumvevmxsxcx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[-4];
-// //     smatrix_sxd_epmumvevmxdsx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sxd_epmumvevmxdsx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[1];
-// //     smatrix_sxd_epmumvevmxucx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sxd_epmumvevmxucx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[1];
-// //     smatrix_sxdx_epmumvevmxdxsx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sxdx_epmumvevmxdxsx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[-1];
-// //     smatrix_sxu_epmumvevmxusx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sxu_epmumvevmxusx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[2];
-// //     smatrix_sxux_epmumvevmxdxcx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sxux_epmumvevmxdxcx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[-2];
-// //     smatrix_sxux_epmumvevmxuxsx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_sxux_epmumvevmxuxsx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-3] * d_pdfs->fx2[-2];
-// //     smatrix_uc_epmumvevmxuc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uc_epmumvevmxuc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[4];
-// //     smatrix_ucx_epmumvevmxdsx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ucx_epmumvevmxdsx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-4];
-// //     smatrix_ucx_epmumvevmxucx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ucx_epmumvevmxucx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-4];
-// //     smatrix_ud_epmumvevmxud_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ud_epmumvevmxud_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[1];
-// //     smatrix_udx_epmumvevmxsxc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_udx_epmumvevmxsxc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-1];
-// //     smatrix_udx_epmumvevmxudx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_udx_epmumvevmxudx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-1];
-// //     smatrix_ug_epmumvevmxug_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ug_epmumvevmxug_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[21];
-// // //     smatrix_ug_epmumvevmxug_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_ug_epmumvevmxug_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[21];
-// //     smatrix_us_epmumvevmxdc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_us_epmumvevmxdc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[3];
-// //     smatrix_us_epmumvevmxus_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_us_epmumvevmxus_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[3];
-// //     smatrix_usx_epmumvevmxusx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_usx_epmumvevmxusx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-3];
-// //     smatrix_uu_epmumvevmxuu_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uu_epmumvevmxuu_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[2];
-// // //     smatrix_uu_epmumvevmxuu_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uu_epmumvevmxuu_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[4];
-// //     smatrix_uux_epmumvevmxccx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uux_epmumvevmxccx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-2];
-// // //     smatrix_uux_epmumvevmxccx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uux_epmumvevmxccx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-4];
-// //     smatrix_uux_epmumvevmxddx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uux_epmumvevmxddx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-2];
-// // //     smatrix_uux_epmumvevmxddx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uux_epmumvevmxddx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-4];
-// //     smatrix_uux_epmumvevmxgg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uux_epmumvevmxgg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-2];
-// // //     smatrix_uux_epmumvevmxgg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uux_epmumvevmxgg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-4];
-// //     smatrix_uux_epmumvevmxssx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uux_epmumvevmxssx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-2];
-// // //     smatrix_uux_epmumvevmxssx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uux_epmumvevmxssx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-4];
-// //     smatrix_uux_epmumvevmxuux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uux_epmumvevmxuux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[2] * d_pdfs->fx2[-2];
-// // //     smatrix_uux_epmumvevmxuux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uux_epmumvevmxuux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-4];
-// //     smatrix_uxc_epmumvevmxdxs_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxc_epmumvevmxdxs_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[4];
-// //     smatrix_uxc_epmumvevmxuxc_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxc_epmumvevmxuxc_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[4];
-// //     smatrix_uxcx_epmumvevmxuxcx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxcx_epmumvevmxuxcx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[-4];
-// //     smatrix_uxd_epmumvevmxscx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxd_epmumvevmxscx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[1];
-// //     smatrix_uxd_epmumvevmxuxd_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxd_epmumvevmxuxd_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[1];
-// //     smatrix_uxdx_epmumvevmxuxdx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxdx_epmumvevmxuxdx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[-1];
-// //     smatrix_uxg_epmumvevmxuxg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxg_epmumvevmxuxg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[21];
-// // //     smatrix_uxg_epmumvevmxuxg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxg_epmumvevmxuxg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[21];
-// //     smatrix_uxs_epmumvevmxuxs_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxs_epmumvevmxuxs_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[3];
-// //     smatrix_uxsx_epmumvevmxdxcx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxsx_epmumvevmxdxcx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[-3];
-// //     smatrix_uxsx_epmumvevmxuxsx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxsx_epmumvevmxuxsx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[-3];
-// //     smatrix_uxu_epmumvevmxccx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxu_epmumvevmxccx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[2];
-// // //     smatrix_uxu_epmumvevmxccx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxu_epmumvevmxccx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[4];
-// //     smatrix_uxu_epmumvevmxddx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxu_epmumvevmxddx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[2];
-// // //     smatrix_uxu_epmumvevmxddx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxu_epmumvevmxddx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[4];
-// //     smatrix_uxu_epmumvevmxgg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxu_epmumvevmxgg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[2];
-// // //     smatrix_uxu_epmumvevmxgg_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxu_epmumvevmxgg_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[4];
-// //     smatrix_uxu_epmumvevmxssx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxu_epmumvevmxssx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[2];
-// // //     smatrix_uxu_epmumvevmxssx_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxu_epmumvevmxssx_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[4];
-// //     smatrix_uxu_epmumvevmxuux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxu_epmumvevmxuux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[2];
-// // //     smatrix_uxu_epmumvevmxuux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxu_epmumvevmxuux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[4];
-// //     smatrix_uxux_epmumvevmxuxux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxux_epmumvevmxuxux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-2] * d_pdfs->fx2[-2];
-// // //     smatrix_uxux_epmumvevmxuxux_( q_new , ans_new );
-// //     // if( d_params->debug_flag ) cout << " answer smatrix_uxux_epmumvevmxuxux_ " << ans_new[0] << endl;
-// //     result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[-4];
-//     if( d_params->debug_flag )
-//         cout << " m2 results " << result << endl;
+#endif
     return result;
 }
 
@@ -822,7 +410,9 @@ double ll_matrix::matrix_element::eval_zjj( base_event & d_event, matrix_paramet
     if( !couplings_initialized )
     {
         std::string par( "parms.txt" );
+#ifdef __USE_MADGRAPH__
         init_(par.c_str(), par.size());
+#endif
         couplings_initialized = true;
     }
     double result = 0.;
@@ -851,84 +441,49 @@ double ll_matrix::matrix_element::eval_zjj( base_event & d_event, matrix_paramet
 
         /// Again, this is ugly, but functional
         double ans_new[10] = {0};
+#ifdef __USE_MADGRAPH__
         smatrix_cd_epemdc_( q_new , ans_new );
-//         if( d_params->debug_flag )
-//             cout << " answer smatrix_cd_epemdc_ " << ans_new[0] << " " << d_pdfs->fx1[4] << " " <<  d_pdfs->fx2[1] << " " << q1 << " " << q2 << endl;
         result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[1];
         smatrix_cd_epemdc_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_cd_epemdc_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[3];
         smatrix_cdx_epemdxc_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_cdx_epemdxc_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-1];
-//         smatrix_cdx_epemdxc_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_cdx_epemdxc_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-3];
         smatrix_cu_epemuc_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_cu_epemuc_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[2];
         smatrix_cux_epemuxc_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_cux_epemuxc_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[4] * d_pdfs->fx2[-2];
         smatrix_cxd_epemdcx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_cxd_epemdcx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[1];
-//         smatrix_cxd_epemdcx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_cxd_epemdcx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[3];
         smatrix_cxdx_epemdxcx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_cxdx_epemdxcx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[-1];
         smatrix_cxdx_epemdxcx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_cxdx_epemdxcx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[-3];
         smatrix_cxu_epemucx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_cxu_epemucx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[2];
         smatrix_cxux_epemuxcx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_cxux_epemuxcx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[-2];
         smatrix_dc_epemdc_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_dc_epemdc_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[4];
-//         smatrix_dc_epemdc_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_dc_epemdc_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[4];
         smatrix_dcx_epemdcx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_dcx_epemdcx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-4];
-//         smatrix_dcx_epemdcx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_dcx_epemdcx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-4];
         smatrix_dd_epemdd_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_dd_epemdd_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[1];
-//         smatrix_dd_epemdd_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_dd_epemdd_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[3];
         smatrix_ddx_epemddx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epemddx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-1];
-//         smatrix_ddx_epemddx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epemddx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-3];
         smatrix_ddx_epemgg_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epemgg_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-1];
-//         smatrix_ddx_epemgg_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epemgg_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-3];
         smatrix_ddx_epemssx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epemssx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-1];
-//         smatrix_ddx_epemssx_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epemssx_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[3] * d_pdfs->fx2[-3];
         smatrix_ddx_epemuux_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epemuux_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-1];
-//         smatrix_ddx_epemuux_( q_new , ans_new );
-        // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epemuux_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[1] * d_pdfs->fx2[-1];
         smatrix_ddx_epemuux_( q_new , ans_new );
         // if( d_params->debug_flag ) cout << " answer smatrix_ddx_epemuux_ " << ans_new[0] << endl;
@@ -1197,6 +752,7 @@ double ll_matrix::matrix_element::eval_zjj( base_event & d_event, matrix_paramet
 //         smatrix_uxux_epemuxux_( q_new , ans_new );
         // if( d_params->debug_flag ) cout << " answer smatrix_uxux_epemuxux_ " << ans_new[0] << endl;
         result += ans_new[0] * d_pdfs->fx1[-4] * d_pdfs->fx2[-4];
+#endif
     }
 //     if( d_params->debug_flag )
 //         cout << " m2 results " << result << endl;
