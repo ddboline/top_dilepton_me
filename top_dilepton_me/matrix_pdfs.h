@@ -9,7 +9,7 @@
 
 // #include "top_dilepton_me/LHAPDFWrap.h"
 
-// #define __USE_LHAPDF__
+#define __USE_LHAPDF__
 
 #ifdef __USE_LHAPDF__
 extern "C"

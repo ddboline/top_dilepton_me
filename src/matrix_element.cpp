@@ -13,7 +13,7 @@
 #include "TMath.h"
 #include <iostream>
 
-// #define __USE_MADGRAPH__
+#define __USE_MADGRAPH__
 
 using namespace std;
 
