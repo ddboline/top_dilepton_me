@@ -1,3 +1,5 @@
 PDFsets/*.LH*
 *~
 CVS
+bin/top_dilepton_me_x
+obj/*.o
