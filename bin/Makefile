@@ -9,7 +9,7 @@ GSL_DIR=.
 
 # CFLAGS = $(SPECIALFLAGS)  -D__DONT_USE_CAFE__ -I$(GSL_DIR)/include -I$(SRT_TOP)/include
 CFLAGS = $(SPECIALFLAGS)  -D__DONT_USE_CAFE__ -I./
-LFLAGS = $(SPECIALFLAGS) -L./ -L$(SRT_TOP)/lib/$(SRT_SUBDIR) -L$(GSL_DIR)/lib/ -Ltop_dilepton_madgraph/lib/
+LFLAGS = $(SPECIALFLAGS) -L./ -L$(SRT_TOP)/lib/$(SRT_SUBDIR) -L$(GSL_DIR)/lib/ -L../top_dilepton_madgraph/lib/
 # -L../madgraph/ -L/d0usr/products/lhapdf/Linux-2-4/v5_1-GCC3_4_3/lib/
 
 RCXX = $(CFLAGS) $(ROOTCFLAGS)
