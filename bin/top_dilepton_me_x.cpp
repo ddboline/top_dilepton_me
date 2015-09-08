@@ -49,7 +49,7 @@ int main( int argc , char * argv[] )
 {
     cout << "Hello, world!" << endl;
 
-    matrix_parameters * the_parameters = new matrix_parameters;
+//     matrix_parameters * the_parameters = new matrix_parameters;
 //     int passed = the_parameters->run_executable( argc , argv );
    TString param_file("DALITZ_smearing.RCP") , in_file("") , command("event") , out_ascii_file("events.txt"),  out_file("rho_mw_mt_distributions.root");
     std::vector<TString> param_files;
@@ -61,7 +61,7 @@ int main( int argc , char * argv[] )
     TString process("Zjj") , final_state("emu");
     int iterations = 5000;
     int mc_mass = 175;
-    int arg_index = 1;
+//     int arg_index = 1;
     int number_of_ensembles = 1000 , number_per_ensemble = 50;
     int first_event = 0;
     int last_event = 1000000000;
