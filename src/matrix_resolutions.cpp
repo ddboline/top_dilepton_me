@@ -494,7 +494,8 @@ bool ll_matrix::matrix_resolutions::smear_jet( TLorentzVector & mom, double deta
     {
         for( int i = 0 ; i < 5 ; i++ )
         {
-            params[2*i] = d_params->transfer_function_parms[ieta][i][0] ; params[2*i+1] = d_params->transfer_function_parms[ieta][i][1] ;
+            params[2*i] = d_params->transfer_function_parms[ieta][0][i] ;
+            params[2*i+1] = d_params->transfer_function_parms[ieta][1][i] ;
         }
     }
     else
